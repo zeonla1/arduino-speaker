@@ -1,0 +1,57 @@
+const int buttonPin = 6;
+const int RelayPin = 7;
+
+const long OnTime = 2000; //Время включенного бузера (2сек)
+const long Between = 5000; //Время между половинками (5сек)
+const long Half = 15000; //Время в самой половинке (15сек)
+const long Ended = 10000; //Перерыв после цикла (10сек)
+
+unsigned long prev = 0; //Для хранения предыдущей активации 
+unsigned long pre1 = 0; //Для звонка задержка
+
+int flag = 0;
+int i;
+
+void Ring(){
+    digitalWrite(RelayPin, HIGH);
+    delay(OnTime);
+    digitalWrite(RelayPin, LOW);  
+}
+
+void setup() {
+  pinMode(buttonPin, INPUT_PULLUP);
+  pinMode(RelayPin, OUTPUT);
+  pinMode(LED_BUILTIN, OUTPUT);
+}
+void loop() {
+  while(i < 5){
+    unsigned long currentMillies = millis();
+    if (currentMillies - prev >= Half && flag==0){
+      prev = currentMillies;
+      flag=1;
+      Ring();
+    }
+    if (currentMillies - prev >= Between && flag==1){
+      prev = currentMillies;
+      flag=2;
+      Ring();
+    }
+    if (currentMillies - prev >= Half && flag==2){
+      prev = currentMillies;
+      flag=3;
+      Ring();
+    }
+    if (currentMillies - prev >= Ended && flag==3){
+      prev = currentMillies;
+      flag=0;
+      Ring();
+      i++;
+    }
+  if (digitalRead(buttonPin) == LOW) {
+    digitalWrite(RelayPin, HIGH);  
+    } 
+  else {
+    digitalWrite(RelayPin, LOW);   
+    }
+  }
+}
