@@ -1,10 +1,10 @@
 const int buttonPin = 6;
 const int RelayPin = 7;
 
-const long OnTime = 2000; //Время включенного бузера (2сек)
-const long Between = 5000; //Время между половинками (5сек)
-const long Half = 15000; //Время в самой половинке (15сек)
-const long Ended = 10000; //Перерыв после цикла (10сек)
+const long OnTime = 2000; 
+const long Between = 5000; 
+const long Half = 15000; 
+const long Ended = 10000; 
 
 unsigned long prev = 0; //Для хранения предыдущей активации 
 unsigned long pre1 = 0; //Для звонка задержка
